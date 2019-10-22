@@ -1,14 +1,14 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import Login from "./Login";
-import Callback from "./Callback";
+import CallbackPage from './pages/CallbackPage';
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
     <Switch>
-      <Route path="/" component={Login} exact />
-      <Route path="/callback" component={Callback} exact />
+      <Route path="/" component={MainPage} exact />
+      <Route path="/callback" component={CallbackPage} exact />
     </Switch>
   );
 }

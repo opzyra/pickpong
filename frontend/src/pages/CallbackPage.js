@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import qs from "qs";
+import { useEffect } from 'react';
+import axios from 'axios';
+import qs from 'qs';
 
 function Callback({ location }) {
   useEffect(() => {
@@ -9,11 +9,11 @@ function Callback({ location }) {
     }
 
     const { code } = qs.parse(location.search, {
-      ignoreQueryPrefix: true
+      ignoreQueryPrefix: true,
     });
 
     getToken(code);
-  }, []);
+  }, [location]);
   return null;
 }
 
