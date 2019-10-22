@@ -20,7 +20,8 @@ const DescriptionBlock = styled.div`
   text-align: center;
 
   img {
-    width: 380px;
+    width: 300px;
+    margin-bottom: 16px;
   }
 
   h3 {
@@ -28,7 +29,12 @@ const DescriptionBlock = styled.div`
   }
 
   h1 {
-    text-shadow: 5px 5px 10% #666666;
+    text-shadow: 1px 0px 1px #cccccc, 0px 1px 1px #eeeeee, 2px 1px 1px #cccccc,
+      1px 2px 1px #eeeeee, 3px 2px 1px #cccccc, 2px 3px 1px #eeeeee,
+      4px 3px 1px #cccccc, 3px 4px 1px #eeeeee, 5px 4px 1px #cccccc,
+      4px 5px 1px #eeeeee, 6px 5px 1px #cccccc, 5px 6px 1px #eeeeee,
+      7px 6px 1px #cccccc;
+
     .pre {
       color: #6f5afd;
     }
@@ -45,7 +51,7 @@ function Visual() {
       <Wrap>
         <DescriptionBlock>
           <img src={Octodex} alt="octodex" />
-          <h3>깃허브 한 번 봐주시면</h3>
+          <h3>깃허브 로그인 해주시면</h3>
           <h1>
             <span className="pre">룰렛응모권</span>{' '}
             <span className="suf">즉시지급!</span>
