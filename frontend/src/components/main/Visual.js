@@ -24,8 +24,9 @@ const DescriptionBlock = styled.div`
     margin-bottom: 16px;
   }
 
-  h3 {
+  h4 {
     color: #666666;
+    font-weight: normal;
   }
 
   h1 {
@@ -51,7 +52,7 @@ function Visual() {
       <Wrap>
         <DescriptionBlock>
           <img src={Octodex} alt="octodex" />
-          <h3>깃허브 로그인 해주시면</h3>
+          <h4>깃허브 로그인 해주시면</h4>
           <h1>
             <span className="pre">룰렛응모권</span>{' '}
             <span className="suf">즉시지급!</span>
