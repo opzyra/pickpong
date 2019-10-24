@@ -2,10 +2,20 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import qs from 'qs';
 
-function Callback({ location }) {
+import storage from '../utils/storage';
+
+function Callback({ history, location }) {
   useEffect(() => {
     async function getToken(code) {
-      await axios.post(`http://localhost:3003/auth/`, { code });
+      try {
+        const { data } = await axios.post(`http://localhost:3003/auth/`, {
+          code,
+        });
+        storage.setItem('access_token', data.access_token);
+        history.push('/');
+      } catch (error) {
+        history.push('/error');
+      }
     }
 
     const { code } = qs.parse(location.search, {
@@ -13,7 +23,7 @@ function Callback({ location }) {
     });
 
     getToken(code);
-  }, [location]);
+  }, [history, location]);
   return null;
 }
 
