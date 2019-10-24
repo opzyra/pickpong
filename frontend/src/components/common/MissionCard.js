@@ -17,7 +17,7 @@ const MissionCardBlock = styled.div`
   }
 `;
 
-function MissionCard({ img, description, color, onClick }) {
+function MissionCard({ img, description, color, status, onClick }) {
   return (
     <MissionCardBlock>
       <img src={img} alt={description} />
@@ -25,7 +25,9 @@ function MissionCard({ img, description, color, onClick }) {
         className="description"
         dangerouslySetInnerHTML={{ __html: description }}
       ></div>
-      <Button color={color}>미션 참여하기</Button>
+      <Button color={color} disabled={!status && `disabled`} onClick={onClick}>
+        {status ? `미션 참여하기` : `참여 완료`}
+      </Button>
     </MissionCardBlock>
   );
 }

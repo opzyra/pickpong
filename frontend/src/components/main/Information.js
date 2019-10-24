@@ -12,7 +12,7 @@ const InformationBlock = styled.div`
   background: #eceaf8;
   height: 100%;
   text-align: center;
-  padding: 48px 0px;
+  padding: 60px 0px;
 `;
 
 const SubTitleBlock = styled.div`
@@ -40,11 +40,17 @@ const TicketBlock = styled.div`
 `;
 
 function Information() {
+  const onMissionLogin = () => {
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=b82991dc418733d59988&redirect_uri=http://localhost:3000/callback`;
+  };
+
   const missions = [
     {
       img: MissionLogin,
       description: `리엑트로 만든 토이 프로젝트의<br/>로그인 기능이 작동하는지 확인해 주세요`,
       color: '#007cff',
+      status: true,
+      onClick: onMissionLogin,
     },
     {
       img: MissionFollow,
@@ -74,6 +80,8 @@ function Information() {
               img={mission.img}
               description={mission.description}
               color={mission.color}
+              status={mission.status}
+              onClick={mission.onClick}
               key={index}
             />
           ))}

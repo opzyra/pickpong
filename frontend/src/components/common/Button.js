@@ -16,6 +16,11 @@ const ButtonBlock = styled.button`
     css`
       background: ${props.color};
     `}
+
+  &:disabled {
+    cursor: unset;
+    background: #dddddd;
+  }
 `;
 
 function Button({ color, children, ...rest }) {

@@ -5,7 +5,7 @@ import VisualPattern from '../../assets/images/visual-pattern.png';
 import Octodex from '../../assets/images/octodex.png';
 import Wrap from '../common/Wrap';
 
-const VisualBlock = styled.section`
+const VisualBlock = styled.div`
   background: #d5d6f4 url(${VisualPattern}) center center no-repeat;
   background-size: cover;
   position: relative;
