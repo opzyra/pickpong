@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import MissionLogin from '../../assets/images/mission-login.png';
-import MissionFollow from '../../assets/images/mission-follow.png';
-import MissionResume from '../../assets/images/mission-resume.png';
-
 import Wrap from '../common/Wrap';
-import MissionCard from '../common/MissionCard';
+
+import MissionLogin from '../common/MissionLogin';
+import MissionFollow from '../common/MissionFollow';
+import MissionResume from '../common/MissionResume';
 
 const InformationBlock = styled.div`
   background: #eceaf8;
@@ -40,30 +39,6 @@ const TicketBlock = styled.div`
 `;
 
 function Information() {
-  const onMissionLogin = () => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=b82991dc418733d59988&redirect_uri=http://localhost:3000/callback`;
-  };
-
-  const missions = [
-    {
-      img: MissionLogin,
-      description: `리엑트로 만든 토이 프로젝트의<br/>로그인 기능이 작동하는지 확인해 주세요`,
-      color: '#007cff',
-      status: true,
-      onClick: onMissionLogin,
-    },
-    {
-      img: MissionFollow,
-      description: `만나서 반가워요 !<br/>개발자의 깃허브를 팔로우해 주세요`,
-      color: '#d949aa',
-    },
-    {
-      img: MissionResume,
-      description: `저는 새로운 보금자리를 찾고 있어요 <br/>이력서를 한 번 살펴봐 주세요`,
-      color: '#7048e8',
-    },
-  ];
-
   return (
     <InformationBlock>
       <Wrap>
@@ -75,16 +50,9 @@ function Information() {
           </h5>
         </SubTitleBlock>
         <MissionBlock>
-          {missions.map((mission, index) => (
-            <MissionCard
-              img={mission.img}
-              description={mission.description}
-              color={mission.color}
-              status={mission.status}
-              onClick={mission.onClick}
-              key={index}
-            />
-          ))}
+          <MissionLogin />
+          <MissionFollow />
+          <MissionResume />
         </MissionBlock>
         <TicketBlock>
           <ul>

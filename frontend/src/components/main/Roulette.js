@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Wrap from '../common/Wrap';
 import RoulettePanel from '../common/RoulettePanel';
+import { useAuthState } from '../../contexts/auth/authContext';
 
 const RouletteBlack = styled.div`
   background: #ded7e1;
@@ -33,6 +34,8 @@ const TicketBlock = styled.div`
 `;
 
 function Roulette() {
+  const { user } = useAuthState();
+
   return (
     <RouletteBlack>
       <Wrap>
@@ -42,9 +45,14 @@ function Roulette() {
             스타벅스 커피, 편의점 상품권을 비롯한 다양한 경품에 도전해 보세요
           </span>
           <TicketBlock>
-            <p>
-              <span>opzyra</span>님 응모권 수 <span className="count">3</span>회
-            </p>
+            {user ? (
+              <p>
+                <span>{user.id}</span>님 응모권 수{' '}
+                <span className="count">3</span>회
+              </p>
+            ) : (
+              <p>로그인 해주세요</p>
+            )}
           </TicketBlock>
           <RoulettePanel></RoulettePanel>
         </RouletteAreaBlock>

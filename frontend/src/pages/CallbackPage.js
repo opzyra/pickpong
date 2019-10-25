@@ -1,29 +1,28 @@
 import { useEffect } from 'react';
-import axios from 'axios';
 import qs from 'qs';
 
-import storage from '../utils/storage';
+import { setUser } from '../contexts/auth/authAction';
+import { useAuthDispatch } from '../contexts/auth/authContext';
 
 function Callback({ history, location }) {
+  const authDispatch = useAuthDispatch();
+
   useEffect(() => {
-    async function getToken(code) {
+    async function getToken() {
+      const { code } = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      });
+
       try {
-        const { data } = await axios.post(`http://localhost:3003/auth/`, {
-          code,
-        });
-        storage.setItem('access_token', data.access_token);
-        history.push('/');
+        await setUser(authDispatch, code);
+        window.location.href = '/';
       } catch (error) {
-        history.push('/error');
+        history.push('/?error=auth');
       }
     }
 
-    const { code } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    });
-
-    getToken(code);
-  }, [history, location]);
+    getToken();
+  }, [authDispatch, history, location]);
   return null;
 }
 
