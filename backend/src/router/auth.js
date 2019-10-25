@@ -10,7 +10,7 @@ const router = asyncRouter();
 router.get('/', async (req, res) => {
   const { GIT_CLIEND_ID, GIT_REDIRECT_URL } = process.env;
   return res.json({
-    redirect: `https://github.com/login/oauth/authorize?cliend_id=${GIT_CLIEND_ID}&redirect_uri=${GIT_REDIRECT_URL}`,
+    authUrl: `https://github.com/login/oauth/authorize?client_id=${GIT_CLIEND_ID}&redirect_uri=${GIT_REDIRECT_URL}`,
   });
 });
 
@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/refresh', async (req, res) => {
-  const { user } = req;
+  const { user } = req.body;
 
   if (!user) {
     throw new Error('Invalidate User');
