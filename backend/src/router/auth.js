@@ -3,7 +3,9 @@ import axios from 'axios';
 import asyncRouter from '../core/asyncRouter';
 import * as jwt from '../lib/jwt';
 
+import db from '../database/db';
 import User from '../database/models/User';
+import Mission from '../database/models/Mission';
 
 const router = asyncRouter();
 
@@ -20,6 +22,8 @@ router.post('/', async (req, res) => {
     GIT_CLIENT_SECRET: client_secret,
   } = process.env;
   const { code } = req.body;
+
+  const transaction = await db.transaction();
 
   const response = await axios.post(
     'https://github.com/login/oauth/access_token',
@@ -42,15 +46,25 @@ router.post('/', async (req, res) => {
     },
   });
 
-  await User.upsert({
-    id: git.login,
-    name: git.name,
-    avatar: git.avatar_url,
-    token: token,
-  });
+  let user = await User.findById(git.login);
 
-  const user = await User.findById(git.login);
+  if(!user) {
+    user = await User.create({
+      id: git.login,
+      name: git.name,
+      avatar: git.avatar_url,
+      token: token,
+    }, {transaction});
+
+    await Mission.upsert({
+      fk_user_idx: user.idx,
+      type: 1,
+    }, {transaction});
+  }
+
   const access_token = await jwt.generate({ user });
+
+  await transaction.commit();
 
   return res.json({ access_token });
 });
@@ -62,7 +76,7 @@ router.post('/refresh', async (req, res) => {
     throw new Error('Invalidate User');
   }
 
-  const { token } = await User.findById(user.id);
+  const { idx, token } = await User.findById(user.id);
 
   const { data: git } = await axios.get('https://api.github.com/user', {
     headers: {
@@ -70,13 +84,15 @@ router.post('/refresh', async (req, res) => {
     },
   });
 
-  await User.upsert({
+  const refreshUser = await User.update({
     id: git.login,
     name: git.name,
     avatar: git.avatar_url,
+  }, {
+    where: {idx},
+    returning: true
   });
 
-  const refreshUser = await User.findById(git.login);
   const access_token = await jwt.generate({ user: refreshUser });
 
   return res.json({ access_token });
