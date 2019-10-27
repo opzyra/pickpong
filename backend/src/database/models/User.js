@@ -14,13 +14,14 @@ const User = db.define('user', {
 });
 
 User.findById = async function(id) {
-  const { dataValues } = await User.findOne({
+  const user = await User.findOne({
     where: { id },
+    raw: true,
     attributes: {
       exclude: ['createdAt', 'updatedAt'],
     },
   });
-  return dataValues;
+  return user;
 };
 
 export default User;

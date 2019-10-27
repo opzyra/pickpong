@@ -8,8 +8,15 @@ const Mission = db.define('mission', {
     defaultValue: Sequelize.UUIDV1,
     primaryKey: true,
   },
-  fk_user_idx: { type: Sequelize.UUID },
+  fk_user_idx: Sequelize.UUID,
   type: Sequelize.INTEGER,
+}, {
+  indexes: [
+      {
+          unique: true,
+          fields: ['fk_user_idx', 'type']
+      }
+  ]
 });
 
 Mission.associate = () => {
@@ -18,7 +25,7 @@ Mission.associate = () => {
     onDelete: 'CASCADE',
     onUpdate: 'restrict',
   });
-};
+}; 
 
 Mission.findById = async function(id) {
   const mission = await Mission.findOne({
@@ -40,13 +47,6 @@ Mission.findAllByIdx = async function(idx) {
     },
   });
   return missions;
-};
-
-Mission.insertOne = async function({ userIdx, type }) {
-  await Mission.create({
-    fk_user_idx: userIdx,
-    type,
-  });
 };
 
 export default Mission;
