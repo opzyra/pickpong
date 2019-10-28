@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 const { JWT_SECRET: secret } = process.env;
 
 export const generate = async payload => {
+  delete payload.user.token;
+
   const options = {
     issuer: 'pickpong.kr',
     expiresIn: '7d',

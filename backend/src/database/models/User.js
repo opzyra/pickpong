@@ -13,6 +13,17 @@ const User = db.define('user', {
   token: Sequelize.STRING,
 });
 
+User.findByIdx = async function(idx) {
+  const user = await User.findOne({
+    where: { idx },
+    raw: true,
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
+  });
+  return user;
+};
+
 User.findById = async function(id) {
   const user = await User.findOne({
     where: { id },

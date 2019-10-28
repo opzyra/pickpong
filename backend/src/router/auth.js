@@ -46,20 +46,35 @@ router.post('/', async (req, res) => {
     },
   });
 
-  let user = await User.findById(git.login);
+  const [torkenRefreshResult] = await User.update(
+    {
+      token,
+    },
+    { where: { id: git.login } },
+  );
 
-  if(!user) {
-    user = await User.create({
-      id: git.login,
-      name: git.name,
-      avatar: git.avatar_url,
-      token: token,
-    }, {transaction});
+  let user = null;
 
-    await Mission.upsert({
-      fk_user_idx: user.idx,
-      type: 1,
-    }, {transaction});
+  if (torkenRefreshResult == 0) {
+    user = await User.create(
+      {
+        id: git.login,
+        name: git.name,
+        avatar: git.avatar_url,
+        token: token,
+      },
+      { transaction },
+    );
+
+    await Mission.upsert(
+      {
+        fk_user_idx: user.idx,
+        type: 1,
+      },
+      { transaction },
+    );
+  } else {
+    user = await User.findById(git.login);
   }
 
   const access_token = await jwt.generate({ user });
@@ -77,21 +92,24 @@ router.post('/refresh', async (req, res) => {
   }
 
   const { idx, token } = await User.findById(user.id);
-
   const { data: git } = await axios.get('https://api.github.com/user', {
     headers: {
       Authorization: `token ${token}`,
     },
   });
 
-  const refreshUser = await User.update({
-    id: git.login,
-    name: git.name,
-    avatar: git.avatar_url,
-  }, {
-    where: {idx},
-    returning: true
-  });
+  await User.update(
+    {
+      id: git.login,
+      name: git.name,
+      avatar: git.avatar_url,
+    },
+    {
+      where: { idx },
+    },
+  );
+
+  const refreshUser = await User.findById(git.login);
 
   const access_token = await jwt.generate({ user: refreshUser });
 

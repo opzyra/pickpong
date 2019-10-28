@@ -1,30 +1,37 @@
 import asyncRouter from '../core/asyncRouter';
+import reward from '../lib/reward';
 
-import db from '../database/db';
 import { Mission, Reward } from '../database/models';
 
 const router = asyncRouter();
 
+router.get('/', async (req, res) => {
+  if (!req.user) throw new Error('Not Found User');
+  const user = req.user;
+  const rewards = await Reward.findAllByIdx(user.idx);
+  res.json({ rewards });
+});
+
 router.post('/', async (req, res) => {
   if (!req.user) throw new Error('Not Found User');
-
-  const transaction = await db.transaction();
   const user = req.user;
 
   const missions = await Mission.findAllByIdx(user.idx);
   const rewards = await Reward.findAllByIdx(user.idx);
 
-  if(rewards.length >= missions.length) {
-    res.json({message: '응모권이 없습니다.'});
+  if (rewards.length >= missions.length) {
+    res.json({ reward: null });
     return;
   }
 
-  
+  const [type, deg] = reward();
 
-  await db.commit();
-  
+  await Reward.create({
+    fk_user_idx: user.idx,
+    type,
+  });
 
-  res.json({ missions });
+  res.json({ reward: { type, deg } });
 });
 
 export default router;
