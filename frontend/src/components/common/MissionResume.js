@@ -4,8 +4,10 @@ import Button from './Button';
 
 import MissionResumeImage from '../../assets/images/mission-resume.png';
 
-import { useAuthState } from '../../contexts/auth/authContext';
 import { useMissionState } from '../../contexts/mission/missionContext';
+import { useCommonDispatch } from '../../contexts/common/commonContext';
+import { onAuth } from '../../utils/token';
+import { openModal } from '../../contexts/common/commonAction';
 
 const MissionResumeBlock = styled.div`
   margin: 36px;
@@ -23,12 +25,16 @@ const MissionResumeBlock = styled.div`
 `;
 
 function MissionResume() {
-  const authState = useAuthState();
   const missionState = useMissionState();
   const status = missionState.status[2];
 
+  const commonDispatch = useCommonDispatch();
+
   const onClick = () => {
-    window.location.href = authState.authUrl;
+    if (!onAuth()) {
+      openModal(commonDispatch, 'loginModal');
+      return;
+    }
   };
 
   return (

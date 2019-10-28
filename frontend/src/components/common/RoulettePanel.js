@@ -5,8 +5,14 @@ import Roulette from '../../assets/images/roulette.png';
 import RouletteStart from '../../assets/images/roulette-start.png';
 import RoulettePin from '../../assets/images/roulette-pin.png';
 
+import { useRewardDispatch } from '../../contexts/reward/rewardContext';
+import { setReward, fetchRewards } from '../../contexts/reward/rewardAction';
+import { onAuth } from '../../utils/token';
+import { useCommonDispatch } from '../../contexts/common/commonContext';
+import { openModal, openAlert } from '../../contexts/common/commonAction';
+
 const rouletteEffect = props => {
-  const deg = props.rotation + 3600;
+  const deg = 3600 - props.rotation;
   return keyframes`
   to {
     transform: rotate(${deg}deg);
@@ -17,6 +23,15 @@ const RoulettePanelBlock = styled.div`
   text-align: center;
   margin: 60px 0px;
   position: relative;
+  outline: none;
+
+  img {
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+  }
 
   img.start {
     animation-name: ${props => rouletteEffect(props)};
@@ -50,13 +65,34 @@ function RoulettePanel() {
   const [rotation, setRotation] = useState(0);
   const roulette = useRef(null);
 
-  const start = () => {
+  const rewardDispatch = useRewardDispatch();
+  const commonDispatch = useCommonDispatch();
+
+  const start = async () => {
+    if (!onAuth()) {
+      openModal(commonDispatch, 'loginModal');
+      return;
+    }
+
     if (status) return;
 
-    roulette.current.classList.add('start');
-    setRotation(90);
-
     setStatus(true);
+
+    const reward = await setReward(rewardDispatch);
+    await fetchRewards(rewardDispatch);
+
+    if (!reward) {
+      openAlert(commonDispatch, 'noTicket');
+      setStatus(false);
+      return;
+    }
+    roulette.current.classList.remove('start');
+    roulette.current.classList.add('start');
+    setRotation(reward.deg);
+
+    setTimeout(() => {
+      setStatus(false);
+    }, 8000);
   };
 
   return (

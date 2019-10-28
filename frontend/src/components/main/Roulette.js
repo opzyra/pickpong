@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import Wrap from '../common/Wrap';
 import RoulettePanel from '../common/RoulettePanel';
 import { useAuthState } from '../../contexts/auth/authContext';
+import { useRewardState } from '../../contexts/reward/rewardContext';
+import { useMissionState } from '../../contexts/mission/missionContext';
+import { onAuth } from '../../utils/token';
+import { openModal } from '../../contexts/common/commonAction';
+import { useCommonDispatch } from '../../contexts/common/commonContext';
 
 const RouletteBlack = styled.div`
   background: #ded7e1;
@@ -35,6 +40,8 @@ const TicketBlock = styled.div`
 
 function Roulette() {
   const { user } = useAuthState();
+  const { rewards } = useRewardState();
+  const { missions } = useMissionState();
 
   return (
     <RouletteBlack>
@@ -48,10 +55,13 @@ function Roulette() {
             {user ? (
               <p>
                 <span>{user.id}</span>님 응모권 수{' '}
-                <span className="count">3</span>회
+                <span className="count">
+                  {missions.length - rewards.length}
+                </span>
+                회
               </p>
             ) : (
-              <p>로그인 해주세요</p>
+              <p>로그인해주세요</p>
             )}
           </TicketBlock>
           <RoulettePanel></RoulettePanel>

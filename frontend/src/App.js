@@ -8,16 +8,20 @@ import MainPage from './pages/MainPage';
 import { fetchAuthUrl, fetchUser } from './contexts/auth/authAction';
 import { fetchMissions } from './contexts/mission/missionAction';
 import { useMissionDispatch } from './contexts/mission/missionContext';
+import { useRewardDispatch } from './contexts/reward/rewardContext';
+import { fetchRewards } from './contexts/reward/rewardAction';
 
 function App() {
   const authDispatch = useAuthDispatch();
   const missionDispatch = useMissionDispatch();
+  const rewardDispatch = useRewardDispatch();
 
   useEffect(() => {
     fetchAuthUrl(authDispatch);
     fetchUser(authDispatch);
     fetchMissions(missionDispatch);
-  }, [authDispatch, missionDispatch]);
+    fetchRewards(rewardDispatch);
+  }, [authDispatch, missionDispatch, rewardDispatch]);
 
   return (
     <Switch>

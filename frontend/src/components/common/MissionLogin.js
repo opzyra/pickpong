@@ -4,8 +4,9 @@ import Button from './Button';
 
 import MissionLoginImage from '../../assets/images/mission-login.png';
 
-import { useAuthState } from '../../contexts/auth/authContext';
 import { useMissionState } from '../../contexts/mission/missionContext';
+import { useCommonDispatch } from '../../contexts/common/commonContext';
+import { openModal } from '../../contexts/common/commonAction';
 
 const MissionLoginBlock = styled.div`
   margin: 36px;
@@ -23,12 +24,13 @@ const MissionLoginBlock = styled.div`
 `;
 
 function MissionLogin() {
-  const authState = useAuthState();
   const missionState = useMissionState();
   const status = missionState.status[0];
 
+  const commonDispatch = useCommonDispatch();
+
   const onClick = () => {
-    window.location.href = authState.authUrl;
+    openModal(commonDispatch, 'loginModal');
   };
 
   return (

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 
 import MissionFollowImage from '../../assets/images/mission-follow.png';
 
-import { useAuthState } from '../../contexts/auth/authContext';
-import { useMissionState } from '../../contexts/mission/missionContext';
+import * as apiClient from '../../utils/apiClient';
+import {
+  useMissionState,
+  useMissionDispatch,
+} from '../../contexts/mission/missionContext';
+import { onAuth } from '../../utils/token';
+import { openModal, openAlert } from '../../contexts/common/commonAction';
+import { useCommonDispatch } from '../../contexts/common/commonContext';
+import { fetchMissions } from '../../contexts/mission/missionAction';
 
 const MissionFollowBlock = styled.div`
   margin: 36px;
@@ -23,13 +30,31 @@ const MissionFollowBlock = styled.div`
 `;
 
 function MissionFollow() {
-  const authState = useAuthState();
   const missionState = useMissionState();
-
   const status = missionState.status[1];
 
-  const onClick = () => {
-    window.location.href = authState.authUrl;
+  const commonDispatch = useCommonDispatch();
+  const missionDispatch = useMissionDispatch();
+
+  const onClick = async () => {
+    if (!onAuth()) {
+      openModal(commonDispatch, 'loginModal');
+      return;
+    }
+
+    const { status } = await apiClient.post('/mission/follow');
+    switch (status) {
+      case 'notfound':
+        window.open('https://github.com/opzyra', '_blank');
+        openAlert(commonDispatch, 'follow');
+        break;
+      case 'ok':
+        openAlert(commonDispatch, 'reward');
+        break;
+      default:
+    }
+
+    fetchMissions(missionDispatch);
   };
 
   return (
