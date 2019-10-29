@@ -26,7 +26,7 @@ const Mission = db.define(
 Mission.associate = () => {
   Mission.belongsTo(User, {
     foreignKey: 'fk_user_idx',
-    onDelete: 'CASCADE',
+    onDelete: 'restrict',
     onUpdate: 'restrict',
   });
 };
