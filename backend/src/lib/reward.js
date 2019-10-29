@@ -20,16 +20,17 @@ const commentArcDegree = () => {
   }
 };
 
+// Roulette Percentage
 export default function reward() {
   const chance = random();
 
   if (chance <= 0.05) {
-    return [1, arcDegree(240, 300)]; // Coffee
+    return [1, arcDegree(240, 300)]; // Starbucks
   } else if (chance > 0.05 && chance <= 0.1) {
-    return [2, arcDegree(0, 60)]; // GS
+    return [2, arcDegree(0, 60)]; // PAIK'S
   } else if (chance > 0.1 && chance <= 0.15) {
-    return [3, arcDegree(120, 180)]; // Blog
+    return [3, arcDegree(120, 180)]; // EDIYA
   } else {
-    return [4, commentArcDegree()]; // Comment
+    return [4, commentArcDegree()]; // MEGAPHONE
   }
 }

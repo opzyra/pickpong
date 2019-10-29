@@ -47,4 +47,26 @@ router.post('/follow', async (req, res) => {
   res.json({ status: 'ok' });
 });
 
+router.post('/resume', async (req, res) => {
+  if (!req.user) throw new Error('Not Found User');
+
+  let user = req.user;
+  const missions = await Mission.findAllByIdx(user.idx);
+  const history = missions.filter(
+    mission => mission.fk_user_idx === user.idx && mission.type === 3,
+  );
+
+  if (history.length != 0) {
+    res.json({ status: 'error' });
+    return;
+  }
+
+  await Mission.upsert({
+    fk_user_idx: user.idx,
+    type: 3,
+  });
+
+  res.json({ status: 'ok' });
+});
+
 export default router;
