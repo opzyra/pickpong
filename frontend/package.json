@@ -4,15 +4,18 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
+    "core-js": "^3.3.5",
     "jsonwebtoken": "^8.5.1",
     "qs": "^6.9.0",
     "react": "^16.10.2",
+    "react-app-polyfill": "^1.0.4",
     "react-awesome-modal": "^2.0.5",
     "react-dom": "^16.10.2",
     "react-icons": "^3.8.0",
     "react-paginate": "^6.3.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "regenerator-runtime": "^0.13.3",
     "styled-components": "^4.4.0"
   },
   "scripts": {
@@ -31,9 +34,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "ie >= 9"
     ]
   }
 }
