@@ -21,7 +21,7 @@ const ModalCloseButton = styled.div`
   font-size: 20px;
 `;
 
-function Modal({ type, width, height, effect, children }) {
+function Modal({ type, width, height, effect, callback, children }) {
   const commonState = useCommonState();
   let modal = useRef(false);
   modal.current = commonState[type];
@@ -29,8 +29,9 @@ function Modal({ type, width, height, effect, children }) {
   const commonDispatch = useCommonDispatch();
 
   const onCloseModal = useCallback(() => {
+    callback();
     closeModal(commonDispatch, type);
-  }, [commonDispatch, type]);
+  }, [callback, commonDispatch, type]);
 
   return (
     <ModalBlock>
