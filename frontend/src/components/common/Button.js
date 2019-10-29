@@ -17,15 +17,24 @@ const ButtonBlock = styled.button`
       background: ${props.color};
     `}
 
+  ${props =>
+    props.inline &&
+    css`
+      display: inline-flex;
+      & + & {
+        margin-left: 16px;
+      }
+    `}
+
   &:disabled {
     cursor: unset;
     background: #dddddd;
   }
 `;
 
-function Button({ color, children, ...rest }) {
+function Button({ inline, color, children, ...rest }) {
   return (
-    <ButtonBlock color={color} {...rest}>
+    <ButtonBlock inline={inline} color={color} {...rest}>
       {children}
     </ButtonBlock>
   );

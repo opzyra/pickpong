@@ -1,15 +1,23 @@
 import React, { useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import Roulette from '../../assets/images/roulette.png';
-import RouletteStart from '../../assets/images/roulette-start.png';
-import RoulettePin from '../../assets/images/roulette-pin.png';
-
 import { useRewardDispatch } from '../../contexts/reward/rewardContext';
 import { setReward, fetchRewards } from '../../contexts/reward/rewardAction';
 import { onAuth } from '../../utils/token';
-import { useCommonDispatch } from '../../contexts/common/commonContext';
-import { openModal, openAlert } from '../../contexts/common/commonAction';
+import {
+  useCommonDispatch,
+  useCommonState,
+} from '../../contexts/common/commonContext';
+import {
+  openModal,
+  openAlert,
+  setRoulette,
+  setRoatting,
+} from '../../contexts/common/commonAction';
+
+import Roulette from '../../assets/images/roulette.png';
+import RouletteStart from '../../assets/images/roulette-start.png';
+import RoulettePin from '../../assets/images/roulette-pin.png';
 
 const rouletteEffect = props => {
   const deg = 3600 - props.rotation;
@@ -24,6 +32,7 @@ const RoulettePanelBlock = styled.div`
   margin: 60px 0px;
   position: relative;
   outline: none;
+  overflow: hidden;
 
   img {
     -ms-user-select: none;
@@ -61,7 +70,7 @@ const RouletteStartBlock = styled.img`
 `;
 
 function RoulettePanel() {
-  const [status, setStatus] = useState(false);
+  const { rotating } = useCommonState();
   const [rotation, setRotation] = useState(0);
   const roulette = useRef(null);
 
@@ -74,16 +83,16 @@ function RoulettePanel() {
       return;
     }
 
-    if (status) return;
+    if (rotating) return;
 
-    setStatus(true);
+    setRoatting(commonDispatch, true);
 
     const reward = await setReward(rewardDispatch);
     await fetchRewards(rewardDispatch);
 
     if (!reward) {
       openAlert(commonDispatch, 'noTicket');
-      setStatus(false);
+      setRoatting(commonDispatch, false);
       return;
     }
     roulette.current.classList.remove('start');
@@ -91,8 +100,10 @@ function RoulettePanel() {
     setRotation(reward.deg);
 
     setTimeout(() => {
-      setStatus(false);
-    }, 8000);
+      setRoulette(commonDispatch, reward.type);
+      openModal(commonDispatch, 'rouletteModal');
+      setRoatting(commonDispatch, false);
+    }, 7000);
   };
 
   return (

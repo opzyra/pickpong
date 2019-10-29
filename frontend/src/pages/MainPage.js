@@ -7,6 +7,8 @@ import Comment from '../components/main/Comment';
 import Footer from '../components/main/Footer';
 import LoginModal from '../components/main/LoginModal';
 import Alert from '../components/common/Alert';
+import RouletteModal from '../components/main/RouletteModal';
+import RewardModal from '../components/main/RewardModal';
 
 const MainBlock = styled.div``;
 
@@ -19,6 +21,8 @@ function MainPage() {
       <Comment />
       <Footer />
       <LoginModal />
+      <RouletteModal />
+      <RewardModal />
       <Alert />
     </MainBlock>
   );

@@ -2,12 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 
-import MissionResumeImage from '../../assets/images/mission-resume.png';
+import * as apiClient from '../../utils/apiClient';
 
-import { useMissionState } from '../../contexts/mission/missionContext';
+import {
+  useMissionState,
+  useMissionDispatch,
+} from '../../contexts/mission/missionContext';
 import { useCommonDispatch } from '../../contexts/common/commonContext';
 import { onAuth } from '../../utils/token';
-import { openModal } from '../../contexts/common/commonAction';
+import { openModal, openAlert } from '../../contexts/common/commonAction';
+
+import MissionResumeImage from '../../assets/images/mission-resume.png';
+import { fetchMissions } from '../../contexts/mission/missionAction';
 
 const MissionResumeBlock = styled.div`
   margin: 36px;
@@ -29,12 +35,25 @@ function MissionResume() {
   const status = missionState.status[2];
 
   const commonDispatch = useCommonDispatch();
+  const missionDispatch = useMissionDispatch();
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!onAuth()) {
       openModal(commonDispatch, 'loginModal');
       return;
     }
+
+    const { status } = await apiClient.post('/mission/resume');
+    switch (status) {
+      case 'ok':
+        openAlert(commonDispatch, 'reward');
+        window.open('https://devhyun.com', '_blank');
+        break;
+      default:
+        openAlert(commonDispatch, 'error');
+    }
+
+    fetchMissions(missionDispatch);
   };
 
   return (

@@ -71,6 +71,11 @@ function Alert() {
         '응모권이 없어 룰렛에 도전하실 수 없습니다.<br>미션으로 응모권을 획득해 보세요 !';
       img = ErrorImage;
       break;
+    case 'error':
+      title = '시스템 에러';
+      description = '시스템 에러가 발생하였습니다. 관리자에게 문의해주세요.';
+      img = ErrorImage;
+      break;
     default:
   }
 

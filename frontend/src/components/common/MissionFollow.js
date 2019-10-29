@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Button from './Button';
-
-import MissionFollowImage from '../../assets/images/mission-follow.png';
 
 import * as apiClient from '../../utils/apiClient';
 import {
@@ -13,6 +11,8 @@ import { onAuth } from '../../utils/token';
 import { openModal, openAlert } from '../../contexts/common/commonAction';
 import { useCommonDispatch } from '../../contexts/common/commonContext';
 import { fetchMissions } from '../../contexts/mission/missionAction';
+
+import MissionFollowImage from '../../assets/images/mission-follow.png';
 
 const MissionFollowBlock = styled.div`
   margin: 36px;
@@ -45,13 +45,15 @@ function MissionFollow() {
     const { status } = await apiClient.post('/mission/follow');
     switch (status) {
       case 'notfound':
-        window.open('https://github.com/opzyra', '_blank');
         openAlert(commonDispatch, 'follow');
+        window.open('https://github.com/opzyra', '_blank');
         break;
       case 'ok':
         openAlert(commonDispatch, 'reward');
         break;
       default:
+        openAlert(commonDispatch, 'error');
+        break;
     }
 
     fetchMissions(missionDispatch);

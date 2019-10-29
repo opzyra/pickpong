@@ -1,5 +1,10 @@
 import * as commonContext from './commonContext';
 
+export async function setRoatting(dispatch, rotating) {
+  const setRoattingActionCreator = commonContext.setRotating(rotating);
+  dispatch(setRoattingActionCreator);
+}
+
 export async function openModal(dispatch, type) {
   const setModalActionCreator = commonContext.setModal({ type, visible: true });
   dispatch(setModalActionCreator);
@@ -31,4 +36,9 @@ export async function closeAlert(dispatch) {
     description: '',
   });
   dispatch(setAlertActionCreator);
+}
+
+export async function setRoulette(dispatch, type) {
+  const setRouletteActionCreator = commonContext.setRoulette(type);
+  dispatch(setRouletteActionCreator);
 }

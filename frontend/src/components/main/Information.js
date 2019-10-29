@@ -27,6 +27,7 @@ const MissionBlock = styled.div`
 
 const TicketBlock = styled.div`
   background: #e2deef;
+  position: relative;
 
   ul {
     text-align: left;
@@ -56,13 +57,19 @@ function Information() {
         </MissionBlock>
         <TicketBlock>
           <ul>
-            <li>미션별로 1회 참여가 가능합니다.</li>
             <li>
-              팔로우 맺기의 경우 새로고침을 통해 응모권을 받으실 수 있습니다.
+              미션별로 1회 참여가 가능하며 응모권은 최대 3개 획득이 가능합니다.
+            </li>
+            <li>
+              팔로우를 맺으신 뒤에 다시 한번 미션 참여하기 버튼을 클릭해야
+              응모권이 지급됩니다.
             </li>
             <li>
               부당한 방법으로 응모권을 획득하여 사용하신 경우 보상이 지급되지
               않습니다.
+            </li>
+            <li>
+              이벤트는 경품이 모두 소진된 경우 사전예고 없이 종료될 수 있습니다.
             </li>
           </ul>
         </TicketBlock>
