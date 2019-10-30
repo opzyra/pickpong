@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
     user = await User.create(
       {
         id: git.login,
-        name: git.name,
+        name: git.name || git.login,
         avatar: git.avatar_url,
         token: token,
       },
@@ -101,7 +101,7 @@ router.post('/refresh', async (req, res) => {
   await User.update(
     {
       id: git.login,
-      name: git.name,
+      name: git.name || git.login,
       avatar: git.avatar_url,
     },
     {
