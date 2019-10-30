@@ -3,7 +3,7 @@ import * as jwt from '../lib/jwt';
 export default async function(req, res, next) {
   const { authorization } = req.headers;
 
-  if (authorization === 'null') {
+  if (authorization === 'null' || !authorization) {
     req.user = null;
     return next();
   }
