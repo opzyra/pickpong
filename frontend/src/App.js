@@ -1,18 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useAuthDispatch } from './contexts/auth/authContext';
-
 import CallbackPage from './pages/CallbackPage';
 import MainPage from './pages/MainPage';
-import { fetchAuthUrl, fetchUser } from './contexts/auth/authAction';
-import { fetchMissions } from './contexts/mission/missionAction';
-import { useMissionDispatch } from './contexts/mission/missionContext';
-import { useRewardDispatch } from './contexts/reward/rewardContext';
-import { fetchRewards } from './contexts/reward/rewardAction';
-import { useCommentDispatch } from './contexts/comment/commentContext';
-import { fetchComments } from './contexts/comment/commentAction';
 
 const AppBlock = styled.div`
   h1 {
@@ -79,19 +70,6 @@ const AppBlock = styled.div`
 `;
 
 function App() {
-  const authDispatch = useAuthDispatch();
-  const missionDispatch = useMissionDispatch();
-  const rewardDispatch = useRewardDispatch();
-  const commentDispatch = useCommentDispatch();
-
-  useEffect(() => {
-    fetchAuthUrl(authDispatch);
-    fetchUser(authDispatch);
-    fetchMissions(missionDispatch);
-    fetchRewards(rewardDispatch);
-    fetchComments(commentDispatch);
-  }, [authDispatch, commentDispatch, missionDispatch, rewardDispatch]);
-
   return (
     <AppBlock>
       <Switch>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-awesome-modal';
 import { MdClose } from 'react-icons/md';
@@ -27,22 +27,19 @@ const ModalCloseButton = styled.div`
 
 function Modal({ type, width, height, effect, callback, children }) {
   const commonState = useCommonState();
-  let modal = useRef(false);
-  modal.current = commonState[type];
-
   const commonDispatch = useCommonDispatch();
 
-  const onCloseModal = useCallback(() => {
+  const onCloseModal = () => {
     callback && callback();
     closeModal(commonDispatch, type);
-  }, [callback, commonDispatch, type]);
+  };
 
   return (
     <ModalBlock>
       <ReactModal
         width={width}
         height={height}
-        visible={modal.current}
+        visible={commonState[type]}
         effect={effect}
       >
         {children}
