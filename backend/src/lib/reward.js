@@ -24,11 +24,11 @@ const commentArcDegree = () => {
 export default function reward() {
   const chance = random();
 
-  if (chance <= 0.05) {
+  if (chance <= 0.15) {
     return [1, arcDegree(240, 300)]; // Starbucks
-  } else if (chance > 0.05 && chance <= 0.1) {
+  } else if (chance > 0.15 && chance <= 0.3) {
     return [2, arcDegree(0, 60)]; // PAIK'S
-  } else if (chance > 0.1 && chance <= 0.15) {
+  } else if (chance > 0.3 && chance <= 0.45) {
     return [3, arcDegree(120, 180)]; // EDIYA
   } else {
     return [4, commentArcDegree()]; // MEGAPHONE
