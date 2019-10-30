@@ -16,6 +16,10 @@ import ErrorImage from '../../assets/images/error.png';
 
 const AlertBlock = styled.div`
   position: relative;
+  & > div > div {
+    padding: 12px;
+    box-sizing: border-box;
+  }
 `;
 
 const AlertContentsBlock = styled.div`

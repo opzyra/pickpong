@@ -12,6 +12,10 @@ const InformationBlock = styled.div`
   height: 100%;
   text-align: center;
   padding: 60px 0px;
+
+  ${({ theme }) => theme.mobile`
+    padding: 40px 0px;
+  `};
 `;
 
 const SubTitleBlock = styled.div`
@@ -23,6 +27,10 @@ const SubTitleBlock = styled.div`
 const MissionBlock = styled.div`
   display: flex;
   margin: 12px 0px 48px 0;
+
+  ${({ theme }) => theme.mobile`
+    flex-direction:column;  
+  `};
 `;
 
 const TicketBlock = styled.div`
@@ -37,6 +45,15 @@ const TicketBlock = styled.div`
   li + li {
     margin-top: 12px;
   }
+
+  ${({ theme }) => theme.mobile`
+    margin: 12px;
+    ul {
+      padding: 16px;
+      line-height: 20px;
+      font-size: 14px;
+    }  
+  `};
 `;
 
 function Information() {

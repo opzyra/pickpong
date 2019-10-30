@@ -11,6 +11,10 @@ import { closeModal } from '../../contexts/common/commonAction';
 
 const ModalBlock = styled.div`
   position: relative;
+  & > div > div {
+    padding: 12px;
+    box-sizing: border-box;
+  }
 `;
 
 const ModalCloseButton = styled.div`
@@ -29,7 +33,7 @@ function Modal({ type, width, height, effect, callback, children }) {
   const commonDispatch = useCommonDispatch();
 
   const onCloseModal = useCallback(() => {
-    callback();
+    callback && callback();
     closeModal(commonDispatch, type);
   }, [callback, commonDispatch, type]);
 

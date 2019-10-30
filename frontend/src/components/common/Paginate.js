@@ -27,7 +27,7 @@ const PaginateBlock = styled.div`
   }
 `;
 
-function Paginate({ pageCount }) {
+function Paginate({ pageCount, onPageChange }) {
   return (
     <PaginateBlock>
       <ReactPaginate
@@ -38,7 +38,7 @@ function Paginate({ pageCount }) {
         pageCount={pageCount}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
-        onPageChange={() => {}}
+        onPageChange={onPageChange}
         containerClassName={'pagination'}
         subContainerClassName={'pages pagination'}
         activeClassName={'active'}

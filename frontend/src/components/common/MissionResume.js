@@ -28,6 +28,16 @@ const MissionResumeBlock = styled.div`
     line-height: 24px;
     margin-bottom: 24px;
   }
+
+  ${({ theme }) => theme.mobile`
+    width: 100%;
+    margin: 0px;
+    margin-top: 36px;
+
+    img {
+      width: 60%;
+    }
+  `};
 `;
 
 function MissionResume() {

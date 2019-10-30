@@ -21,6 +21,15 @@ const MissionLoginBlock = styled.div`
     line-height: 24px;
     margin-bottom: 24px;
   }
+
+  ${({ theme }) => theme.mobile`
+    width: 100%;
+    margin: 0px;
+
+    img {
+      width: 60%;
+    }
+  `};
 `;
 
 function MissionLogin() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { MdDone, MdClose } from 'react-icons/md';
@@ -6,9 +6,6 @@ import { MdDone, MdClose } from 'react-icons/md';
 import * as apiClient from '../../utils/apiClient';
 
 import Modal from '../common/Modal';
-import Button from '../common/Button';
-import { useCommonDispatch } from '../../contexts/common/commonContext';
-import { closeModal } from '../../contexts/common/commonAction';
 
 import {
   useRewardState,
@@ -20,6 +17,11 @@ import Input from '../common/Input';
 
 import RewardEmptyImage from '../../assets/images/reward-empty.png';
 import { fetchRewards } from '../../contexts/reward/rewardAction';
+import { fetchComments } from '../../contexts/comment/commentAction';
+import {
+  useCommentDispatch,
+  useCommentState,
+} from '../../contexts/comment/commentContext';
 
 const RewardModalContents = styled.div`
   padding: 32px;
@@ -85,11 +87,13 @@ function RewardModal() {
   const [placeholder, setPlaceHolder] = useState(null);
   const [reward, setReward] = useState(null);
 
+  const commentState = useCommentState();
   const rewardState = useRewardState();
   const { rewards } = rewardState;
+  const { page } = commentState;
 
   const rewardDispatch = useRewardDispatch();
-  const commonDispatch = useCommonDispatch();
+  const commentDispatch = useCommentDispatch();
 
   const onCloseCallback = () => {
     setInput(false);
@@ -119,6 +123,7 @@ function RewardModal() {
     event.preventDefault();
     await apiClient.post('/reward/receive', { idx: reward.idx, value });
     fetchRewards(rewardDispatch);
+    fetchComments(commentDispatch, page);
     setInput(false);
   };
 
@@ -159,6 +164,7 @@ function RewardModal() {
               <Input
                 placeholder={placeholder}
                 required
+                maxlength="100"
                 onChange={onInputChage}
               ></Input>
             </form>

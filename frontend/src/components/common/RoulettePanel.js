@@ -49,6 +49,10 @@ const RoulettePanelBlock = styled.div`
     animation-direction: normal;
     animation-fill-mode: forwards;
   }
+
+  ${({ theme }) => theme.mobile`
+    margin: 40px 0px;
+  `};
 `;
 
 const RoulettePinBlock = styled.img`
@@ -57,9 +61,18 @@ const RoulettePinBlock = styled.img`
   right: 46.7%;
   transform: translate(-50%, -50%);
   z-index: 100;
+  ${({ theme }) => theme.mobile`
+    width: 30px;
+    top: 28px;
+    right: calc(50% - 30px);
+  `};
 `;
 
-const RouletteImageBlock = styled.img``;
+const RouletteImageBlock = styled.img`
+  ${({ theme }) => theme.mobile`
+    width: 360px;
+  `};
+`;
 
 const RouletteStartBlock = styled.img`
   position: absolute;
@@ -67,6 +80,10 @@ const RouletteStartBlock = styled.img`
   right: 39.6%;
   transform: translate(-50%, -50%);
   cursor: pointer;
+  ${({ theme }) => theme.mobile`
+    width: 94px;
+    right: calc(50% - 96px);
+  `};
 `;
 
 function RoulettePanel() {

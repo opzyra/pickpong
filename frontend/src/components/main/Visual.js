@@ -10,6 +10,10 @@ const VisualBlock = styled.div`
   background-size: cover;
   position: relative;
   height: 560px;
+
+  ${({ theme }) => theme.mobile`
+    height: 400px;
+  `};
 `;
 
 const DescriptionBlock = styled.div`
@@ -44,6 +48,14 @@ const DescriptionBlock = styled.div`
       color: #a831cb;
     }
   }
+
+  ${({ theme }) => theme.mobile`
+    min-width: 300px;
+    img {
+      width: 200px;
+      margin-bottom: 16px;
+    }
+  `};
 `;
 
 function Visual() {
