@@ -57,7 +57,7 @@ function MissionResume() {
     switch (status) {
       case 'ok':
         openAlert(commonDispatch, 'reward');
-        window.open('https://devhyun.com', '_blank');
+        window.open('https://www.rocketpunch.com/@opzyra/jobhunt', '_blank');
         break;
       default:
         openAlert(commonDispatch, 'error');
