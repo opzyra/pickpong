@@ -92,6 +92,10 @@ const TableBlock = styled.div`
       background: #f5f3f6;
     }
 
+    th {
+      font-weight: 500;
+    }
+
     th,
     td {
       padding: 16px 0px;
