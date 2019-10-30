@@ -41,6 +41,10 @@ router.post('/receive', async (req, res) => {
   const user = req.user;
   const { idx, value } = req.body;
 
+  if (value.length > 100) {
+    throw new Error('Value Length Over');
+  }
+
   const transaction = await db.transaction();
 
   const reward = await Reward.findAllByIdx(idx);

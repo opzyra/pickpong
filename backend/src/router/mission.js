@@ -1,6 +1,7 @@
+import axios from 'axios';
+
 import asyncRouter from '../core/asyncRouter';
 import { Mission } from '../database/models';
-import Axios from 'axios';
 
 const router = asyncRouter();
 
@@ -27,7 +28,7 @@ router.post('/follow', async (req, res) => {
     return;
   }
 
-  const { data: followers } = await Axios.get(
+  const { data: followers } = await axios.get(
     `https://api.github.com/users/${user.id}/following`,
   );
   const followStatus = followers.filter(
