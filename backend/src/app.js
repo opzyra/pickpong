@@ -9,6 +9,7 @@ import cors from 'cors';
 
 import { endpoint, error } from './core/error';
 import token from './core/token';
+import access from './core/access';
 import router from './router';
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(token);
+app.use(access);
 app.use(router);
 app.use(endpoint, error);
 
