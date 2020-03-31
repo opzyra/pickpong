@@ -2,10 +2,8 @@
 
 ![logo](https://raw.githubusercontent.com/opzyra/pickpong/master/frontend/public/logo.png)
 
-[https://pickpong.kr](https://pickpong.kr)
-
 **pickpong은 간단한 룰렛 이벤트 페이지이며 리엑트로 개발된 토이프로젝트 입니다.**  
-AWS EC2에 배포하였으며 자세한 기술 스택은 아래를 참고해주세요.
+현재는 deprecated 되었으며 자세한 기술 스택은 아래를 참고해주세요.
 
 ## 기술스택
 
